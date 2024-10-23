@@ -1,5 +1,3 @@
-package Lepsze_biuroPodrozy;
-
 import java.util.ArrayList;
 import java.util.Comparator;
 
@@ -7,14 +5,20 @@ public class BiuroPodrozy {
     private ArrayList<WykupionaWycieczka> wykupioneWycieczki = new ArrayList<>();
 
     public void dodajWykupionaWycieczke(WykupionaWycieczka wykupionaWycieczka) {
+        // Sprawdzanie, czy istnieje wycieczka tego samego klienta w ciągu 30 dni
+        for (WykupionaWycieczka poprzedniaWycieczka : wykupioneWycieczki) {
+            if (poprzedniaWycieczka.getKlient().equals(wykupionaWycieczka.getKlient())) {
+                wykupionaWycieczka.naliczRabatDlaKolejnych(poprzedniaWycieczka);
+            }
+        }
         wykupioneWycieczki.add(wykupionaWycieczka);
     }
 
-    // Raport: Suma wszystkich zakupionych wycieczek
+    // Raport: Suma wszystkich zakupionych wycieczek (z uwzględnieniem rabatów)
     public double sumaWszystkichWycieczek() {
         double suma = 0;
         for (WykupionaWycieczka wykupiona : wykupioneWycieczki) {
-            suma += wykupiona.getCena();
+            suma += wykupiona.getCenaZRabatem();
         }
         return suma;
     }
@@ -28,16 +32,16 @@ public class BiuroPodrozy {
 
     // Raport: Klient z najwyższą zapłaconą kwotą
     public void klientZNajwyzszaKwota() {
-        WykupionaWycieczka najwiekszaKwota = wykupioneWycieczki.stream().max(Comparator.comparingDouble(WykupionaWycieczka::getCena)).orElse(null);
+        WykupionaWycieczka najwiekszaKwota = wykupioneWycieczki.stream().max(Comparator.comparingDouble(WykupionaWycieczka::getCenaZRabatem)).orElse(null);
         if (najwiekszaKwota != null) {
             System.out.println("Klient z najwyższą kwotą: " + najwiekszaKwota.getKlient() +
-                    ", Kwota: " + String.format("%.2f", najwiekszaKwota.getCena()) + " PLN");
+                    ", Kwota: " + String.format("%.2f", najwiekszaKwota.getCenaZRabatem()) + " PLN");
         }
     }
 
     // Raport: Wycieczki posortowane według obrotów (suma)
     public void wycieczkiPosortowanePoObrotach() {
-        wykupioneWycieczki.sort(Comparator.comparingDouble(WykupionaWycieczka::getCena).reversed());
+        wykupioneWycieczki.sort(Comparator.comparingDouble(WykupionaWycieczka::getCenaZRabatem).reversed());
         for (WykupionaWycieczka wykupiona : wykupioneWycieczki) {
             System.out.println(wykupiona);
         }
@@ -73,9 +77,8 @@ public class BiuroPodrozy {
 
         // Wykupione wycieczki
         biuro.dodajWykupionaWycieczke(new WykupionaWycieczka(klient1, wycieczka1, data1));
-        biuro.dodajWykupionaWycieczke(new WykupionaWycieczka(klient2, wycieczka1, data1));
-        biuro.dodajWykupionaWycieczke(new WykupionaWycieczka(klient2, wycieczka2, data2));
-        biuro.dodajWykupionaWycieczke(new WykupionaWycieczka(klient3, wycieczka3, data3));
+        biuro.dodajWykupionaWycieczke(new WykupionaWycieczka(klient1, wycieczka2, data2)); // Powinna mieć dodatkowy rabat
+        biuro.dodajWykupionaWycieczke(new WykupionaWycieczka(klient2, wycieczka3, data3));
 
         // Generowanie raportów
         biuro.generujRaporty();
