@@ -1,5 +1,5 @@
 # Lepsze_Biuro_Podrozy
-Ćwiczenie Lepsza wersja biura podróży 1z3
+# Ćwiczenie Lepsza wersja biura podróży 1z3
 Napisz program obsługi klientów w biurze podróży.
 Założenia: dowolna liczba klientów i wycieczek zapamiętanych w tablicy (utwórz metodę rozszerzającą tablicę za każdym nowym klientem/wycieczką).
 Wycieczka obejmuje informacje (dodaj tablicę z siedmioma możliwymi wycieczkami):
