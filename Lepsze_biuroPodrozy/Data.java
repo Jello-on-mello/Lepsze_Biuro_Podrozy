@@ -1,27 +1,46 @@
 package Lepsze_biuroPodrozy;
 
-// Klasa reprezentująca daty wyjazdu i powrotu
+/**
+ * Klasa reprezentująca daty wyjazdu i powrotu wycieczki.
+ */
 public class Data {
-    private String dataWyjazdu; // Data wyjazdu
-    private String dataPowrotu; // Data powrotu
+    private String dataWyjazdu;
+    private String dataPowrotu;
 
-    // Konstruktor klasy Data
+    /**
+     * Konstruktor klasy Data.
+     *
+     * @param dataWyjazdu data wyjazdu na wycieczkę
+     * @param dataPowrotu data powrotu z wycieczki
+     */
     public Data(String dataWyjazdu, String dataPowrotu) {
         this.dataWyjazdu = dataWyjazdu;
         this.dataPowrotu = dataPowrotu;
     }
 
-    // Metoda zwracająca datę wyjazdu
+    /**
+     * Zwraca datę wyjazdu.
+     *
+     * @return data wyjazdu
+     */
     public String getDataWyjazdu() {
         return dataWyjazdu;
     }
 
-    // Metoda zwracająca datę powrotu
+    /**
+     * Zwraca datę powrotu.
+     *
+     * @return data powrotu
+     */
     public String getDataPowrotu() {
         return dataPowrotu;
     }
 
-    // Metoda toString do wyświetlania daty w czytelnej formie
+    /**
+     * Zwraca reprezentację obiektu jako ciąg znaków.
+     *
+     * @return łańcuch znaków reprezentujący daty
+     */
     @Override
     public String toString() {
         return "Wyjazd: " + dataWyjazdu + ", Powrót: " + dataPowrotu;

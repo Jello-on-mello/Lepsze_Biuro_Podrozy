@@ -3,14 +3,22 @@ package Lepsze_biuroPodrozy;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 
-// Klasa reprezentująca wykupioną wycieczkę
+/**
+ * Klasa reprezentująca wykupioną wycieczkę przez klienta.
+ */
 public class WykupionaWycieczka {
-    private Klient klient; // Klient wykupujący wycieczkę
-    private Wycieczka wycieczka; // Szczegóły wykupionej wycieczki
-    private Data data; // Daty wyjazdu i powrotu
-    private double cenaZRabatem; // Cena po rabacie
+    private Klient klient;
+    private Wycieczka wycieczka;
+    private Data data;
+    private double cenaZRabatem;
 
-    // Konstruktor klasy WykupionaWycieczka
+    /**
+     * Konstruktor klasy WykupionaWycieczka.
+     *
+     * @param klient klient wykupujący wycieczkę
+     * @param wycieczka wycieczka, którą wykupił klient
+     * @param data daty wyjazdu i powrotu
+     */
     public WykupionaWycieczka(Klient klient, Wycieczka wycieczka, Data data) {
         this.klient = klient;
         this.wycieczka = wycieczka;
@@ -18,50 +26,74 @@ public class WykupionaWycieczka {
         this.cenaZRabatem = wycieczka.getCena() * 0.9; // Początkowy rabat 10%
     }
 
-    // Metoda zwracająca klienta
+    /**
+     * Zwraca klienta, który wykupił wycieczkę.
+     *
+     * @return klient wykupujący wycieczkę
+     */
     public Klient getKlient() {
         return klient;
     }
 
-    // Metoda zwracająca wykupioną wycieczkę
+    /**
+     * Zwraca wycieczkę, którą wykupił klient.
+     *
+     * @return wykupiona wycieczka
+     */
     public Wycieczka getWycieczka() {
         return wycieczka;
     }
 
-    // Metoda zwracająca daty wycieczki
+    /**
+     * Zwraca daty wycieczki.
+     *
+     * @return daty wycieczki
+     */
     public Data getData() {
         return data;
     }
 
-    // Sprawdza, czy dwie wycieczki są w odstępie 30 dni
+    /**
+     * Sprawdza, czy dwie wycieczki są w odstępie 30 dni.
+     *
+     * @param poprzedniaWycieczka poprzednia wykupiona wycieczka klienta
+     * @return true, jeżeli różnica dni jest w przedziale 1-30
+     */
     public boolean czyJestWZakresie30Dni(WykupionaWycieczka poprzedniaWycieczka) {
-        // Parsujemy daty wyjazdu i powrotu
         LocalDate dataPowrotuPoprzedniej = LocalDate.parse(poprzedniaWycieczka.getData().getDataPowrotu());
         LocalDate dataWyjazduBiezacej = LocalDate.parse(this.getData().getDataWyjazdu());
-
-        // Obliczamy różnicę dni między powrotem a wyjazdem
         long dniRoznicy = ChronoUnit.DAYS.between(dataPowrotuPoprzedniej, dataWyjazduBiezacej);
-        return dniRoznicy > 0 && dniRoznicy <= 30; // Zwracamy true, jeśli różnica dni jest w przedziale 1-30
+        return dniRoznicy > 0 && dniRoznicy <= 30;
     }
 
-    // Nalicza rabat, jeżeli poprzednia wycieczka była w ciągu 30 dni
+    /**
+     * Naliczanie rabatu dla kolejnych wycieczek w przypadku zakupu w ciągu 30 dni od poprzedniej.
+     *
+     * @param poprzedniaWycieczka poprzednia wykupiona wycieczka klienta
+     */
     public void naliczRabatDlaKolejnych(WykupionaWycieczka poprzedniaWycieczka) {
-        // Sprawdzamy, czy jest w przedziale 30 dni
         if (czyJestWZakresie30Dni(poprzedniaWycieczka)) {
-            // Nalicza dodatkowy rabat 10%
-            this.cenaZRabatem = wycieczka.getCena() * 0.9 * 0.9; // Kolejne 10% rabatu
+            this.cenaZRabatem = wycieczka.getCena() * 0.9 * 0.9;
         }
     }
 
-    // Metoda zwracająca cenę po rabacie
+    /**
+     * Zwraca cenę wycieczki po naliczonym rabacie.
+     *
+     * @return cena wycieczki po rabacie
+     */
     public double getCenaZRabatem() {
         return cenaZRabatem;
     }
 
-    // Metoda toString do wyświetlania informacji o wykupionej wycieczce w czytelnej formie
+    /**
+     * Zwraca reprezentację obiektu jako ciąg znaków.
+     *
+     * @return łańcuch znaków reprezentujący wykupioną wycieczkę
+     */
     @Override
     public String toString() {
-        return wycieczka.toString() + ", Klient: " + klient.getImie() + " " + klient.getNazwisko() + ", " + data.toString() + 
-               ", Cena po rabacie: " + String.format("%.2f", cenaZRabatem) + " PLN";
+        return wycieczka.toString() + ", Klient: " + klient.getImie() + " " + klient.getNazwisko() +
+               ", " + data.toString() + ", Cena po rabacie: " + String.format("%.2f", cenaZRabatem) + " PLN";
     }
 }

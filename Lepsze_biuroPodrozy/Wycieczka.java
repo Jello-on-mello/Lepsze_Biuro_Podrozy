@@ -1,34 +1,58 @@
 package Lepsze_biuroPodrozy;
 
-// Klasa reprezentująca wycieczkę
+/**
+ * Klasa reprezentująca wycieczkę.
+ */
 public class Wycieczka {
-    private String opisPodrozy; // Opis wycieczki
-    private double cena; // Cena wycieczki
-    private int iloscMiejsc; // Ilość dostępnych miejsc
+    private String opisPodrozy;
+    private double cena;
+    private int iloscMiejsc;
 
-    // Konstruktor klasy Wycieczka
+    /**
+     * Konstruktor klasy Wycieczka.
+     *
+     * @param opisPodrozy opis wycieczki
+     * @param cena cena wycieczki
+     * @param iloscMiejsc ilość dostępnych miejsc
+     */
     public Wycieczka(String opisPodrozy, double cena, int iloscMiejsc) {
         this.opisPodrozy = opisPodrozy;
         this.cena = cena;
         this.iloscMiejsc = iloscMiejsc;
     }
 
-    // Metoda zwracająca cenę wycieczki
+    /**
+     * Zwraca cenę wycieczki.
+     *
+     * @return cena wycieczki
+     */
     public double getCena() {
         return cena;
     }
 
-    // Metoda zwracająca opis wycieczki
+    /**
+     * Zwraca opis wycieczki.
+     *
+     * @return opis wycieczki
+     */
     public String getOpisPodrozy() {
         return opisPodrozy;
     }
 
-    // Metoda zwracająca ilość miejsc
+    /**
+     * Zwraca ilość miejsc na wycieczkę.
+     *
+     * @return ilość miejsc
+     */
     public int getIloscMiejsc() {
         return iloscMiejsc;
     }
 
-    // Metoda toString do wyświetlania informacji o wycieczce w czytelnej formie
+    /**
+     * Zwraca reprezentację obiektu jako ciąg znaków.
+     *
+     * @return łańcuch znaków reprezentujący wycieczkę
+     */
     @Override
     public String toString() {
         return "Wycieczka: " + opisPodrozy + ", Cena: " + String.format("%.2f", cena) + " PLN, Miejsca: " + iloscMiejsc;

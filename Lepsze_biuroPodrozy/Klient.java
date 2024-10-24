@@ -1,13 +1,22 @@
 package Lepsze_biuroPodrozy;
 
-// Klasa reprezentująca klienta
+/**
+ * Klasa reprezentująca klienta biura podróży.
+ */
 public class Klient {
-    private String imie; // Imię klienta
-    private String nazwisko; // Nazwisko klienta
-    private int wiek; // Wiek klienta
-    private String adres; // Adres klienta
+    private String imie;
+    private String nazwisko;
+    private int wiek;
+    private String adres;
 
-    // Konstruktor klasy Klient
+    /**
+     * Konstruktor klasy Klient.
+     *
+     * @param imie imię klienta
+     * @param nazwisko nazwisko klienta
+     * @param wiek wiek klienta
+     * @param adres adres klienta
+     */
     public Klient(String imie, String nazwisko, int wiek, String adres) {
         this.imie = imie;
         this.nazwisko = nazwisko;
@@ -15,19 +24,31 @@ public class Klient {
         this.adres = adres;
     }
 
-    // Metoda zwracająca imię klienta
+    /**
+     * Zwraca imię klienta.
+     *
+     * @return imię klienta
+     */
     public String getImie() {
         return imie;
     }
 
-    // Metoda zwracająca nazwisko klienta
+    /**
+     * Zwraca nazwisko klienta.
+     *
+     * @return nazwisko klienta
+     */
     public String getNazwisko() {
         return nazwisko;
     }
 
-    // Metoda toString do wyświetlania danych klienta w czytelnej formie
+    /**
+     * Zwraca reprezentację obiektu jako ciąg znaków.
+     *
+     * @return łańcuch znaków reprezentujący klienta
+     */
     @Override
     public String toString() {
-        return imie + " " + nazwisko + ", wiek: " + wiek + ", adres: " + adres;
+        return imie + " " + nazwisko;
     }
 }
