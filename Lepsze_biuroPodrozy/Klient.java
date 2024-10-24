@@ -45,7 +45,7 @@ public class Klient {
     /**
      * Zwraca reprezentację obiektu jako ciąg znaków.
      *
-     * @return łańcuch znaków reprezentujący klienta
+     * @return łańcuch znaków reprezentujący klienta czyli jego pelne imie i nazwisko
      */
     @Override
     public String toString() {
