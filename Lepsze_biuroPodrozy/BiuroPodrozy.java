@@ -1,7 +1,6 @@
 package Lepsze_biuroPodrozy;
 
 import java.util.ArrayList;
-import java.util.Comparator;
 
 /**
  * Klasa reprezentująca biuro podróży, zarządza wykupionymi wycieczkami.
@@ -51,9 +50,12 @@ public class BiuroPodrozy {
      * Znajduje klienta z najwyższą zapłaconą kwotą za wycieczkę i wyświetla jego dane.
      */
     public void klientZNajwyzszaKwota() {
-        WykupionaWycieczka najwiekszaKwota = wykupioneWycieczki.stream()
-                .max(Comparator.comparingDouble(WykupionaWycieczka::getCenaZRabatem))
-                .orElse(null);
+        WykupionaWycieczka najwiekszaKwota = null;
+        for (WykupionaWycieczka wykupiona : wykupioneWycieczki) {
+            if (najwiekszaKwota == null || wykupiona.getCenaZRabatem() > najwiekszaKwota.getCenaZRabatem()) {
+                najwiekszaKwota = wykupiona;
+            }
+        }
         if (najwiekszaKwota != null) {
             System.out.println("Klient z najwyższą kwotą: " + najwiekszaKwota.getKlient() +
                     ", Kwota: " + String.format("%.2f", najwiekszaKwota.getCenaZRabatem()) + " PLN");
@@ -64,7 +66,17 @@ public class BiuroPodrozy {
      * Wyświetla listę wycieczek posortowanych według wartości obrotów (od najwyższej).
      */
     public void wycieczkiPosortowanePoObrotach() {
-        wykupioneWycieczki.sort(Comparator.comparingDouble(WykupionaWycieczka::getCenaZRabatem).reversed());
+        // Proste sortowanie bąbelkowe bez użycia Comparatora
+        int n = wykupioneWycieczki.size();
+        for (int i = 0; i < n - 1; i++) {
+            for (int j = 0; j < n - i - 1; j++) {
+                if (wykupioneWycieczki.get(j).getCenaZRabatem() < wykupioneWycieczki.get(j + 1).getCenaZRabatem()) {
+                    WykupionaWycieczka temp = wykupioneWycieczki.get(j);
+                    wykupioneWycieczki.set(j, wykupioneWycieczki.get(j + 1));
+                    wykupioneWycieczki.set(j + 1, temp);
+                }
+            }
+        }
         for (WykupionaWycieczka wykupiona : wykupioneWycieczki) {
             System.out.println(wykupiona);
         }
