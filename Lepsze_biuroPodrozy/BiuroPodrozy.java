@@ -34,6 +34,39 @@ public class BiuroPodrozy {
     }
 
     /**
+     * Wyświetla wszystkie wykupione wycieczki dla danego klienta.
+     *
+     * @param klient Klient, dla którego chcemy wyświetlić wykupione wycieczki.
+     */
+    public void wyswietlWycieczkiDlaKlienta(Klient klient) {
+        boolean znalezionoWycieczki = false;
+
+        System.out.println("Wycieczki wykupione przez klienta: " + klient.getImie() + " " + klient.getNazwisko());
+
+        for (int i = 0; i < liczbaWycieczek; i++) {
+            if (wykupioneWycieczki[i].getKlient().equals(klient)) {
+                System.out.println(wykupioneWycieczki[i]);
+                znalezionoWycieczki = true;
+            }
+        }
+
+        if (!znalezionoWycieczki) {
+            System.out.println("Brak wykupionych wycieczek dla tego klienta.");
+        }
+    }
+
+    /**
+     * Wyświetla wszystkie wykupione wycieczki dla wszystkich unikalnych klientów.
+     */
+    public void wyswietlWycieczkiDlaWszystkichKlientow() {
+        for (int i = 0; i < liczbaWycieczek; i++) {
+            Klient klient = wykupioneWycieczki[i].getKlient();
+            System.out.println("\nWycieczki dla klienta: " + klient.getImie() + " " + klient.getNazwisko());
+            wyswietlWycieczkiDlaKlienta(klient);
+        }
+    }
+
+    /**
      * Rozszerza tablicę wykupionych wycieczek, kiedy zabraknie w niej miejsca.
      */
     private void rozszerzTabliceWycieczek() {
@@ -105,12 +138,25 @@ public class BiuroPodrozy {
      */
     public void generujRaporty() {
         System.out.println("Suma wszystkich zakupionych wycieczek: " + sumaWszystkichWycieczek() + " PLN");
+
+        System.out.println("\n-----------------------------------------------------------------\n");
+
         System.out.println("\nInformacje o wszystkich wykupionych wycieczkach:");
         informacjeOWykupionychWycieczkach();
+
+        System.out.println("\n-----------------------------------------------------------------\n");
+
         System.out.println("\nKlient z najwyższą zapłaconą kwotą:");
         klientZNajwyzszaKwota();
+        System.out.println("\n-----------------------------------------------------------------\n");
+
         System.out.println("\nWycieczki posortowane według obrotów:");
         wycieczkiPosortowanePoObrotach();
+
+        System.out.println("\n-----------------------------------------------------------------\n");
+
+        System.out.println("\nWycieczki wykupione przez poszczególnych klientów:");
+        wyswietlWycieczkiDlaWszystkichKlientow();
     }
 
     /**
