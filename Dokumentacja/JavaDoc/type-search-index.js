@@ -1,0 +1,1 @@
+typeSearchIndex = [{"l":"All Classes and Interfaces","u":"allclasses-index.html"},{"p":"Lepsze_biuroPodrozy","l":"BiuroPodrozy"},{"p":"Lepsze_biuroPodrozy","l":"Data"},{"p":"Lepsze_biuroPodrozy","l":"Klient"},{"p":"Lepsze_biuroPodrozy","l":"Wycieczka"},{"p":"Lepsze_biuroPodrozy","l":"WykupionaWycieczka"}];updateSearchResults();
