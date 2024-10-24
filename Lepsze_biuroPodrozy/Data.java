@@ -39,7 +39,7 @@ public class Data {
     /**
      * Zwraca reprezentację obiektu jako ciąg znaków.
      *
-     * @return łańcuch znaków reprezentujący daty
+     * @return łańcuch znaków reprezentujący daty wyjazdu i powrotu
      */
     @Override
     public String toString() {

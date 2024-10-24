@@ -89,7 +89,7 @@ public class WykupionaWycieczka {
     /**
      * Zwraca reprezentację obiektu jako ciąg znaków.
      *
-     * @return łańcuch znaków reprezentujący wykupioną wycieczkę
+     * @return łańcuch znaków reprezentujący dane wykupionej wycieczkę (jaki klient? , kiedy? , jaka cena? , jaka wycieczka? )
      */
     @Override
     public String toString() {
