@@ -1,27 +1,45 @@
 package Lepsze_biuroPodrozy;
 
-import java.util.ArrayList;
-
 /**
  * Klasa reprezentująca biuro podróży, zarządza wykupionymi wycieczkami.
  * Pozwala na dodawanie wycieczek, naliczanie rabatów, generowanie raportów.
  */
 public class BiuroPodrozy {
-    private ArrayList<WykupionaWycieczka> wykupioneWycieczki = new ArrayList<>();
+    private WykupionaWycieczka[] wykupioneWycieczki = new WykupionaWycieczka[10];  // Początkowy rozmiar tablicy
+    private int liczbaWycieczek = 0;
 
     /**
-     * Dodaje wykupioną wycieczkę do listy.
+     * Dodaje wykupioną wycieczkę do tablicy. Jeżeli zabraknie miejsca w tablicy,
+     * zostanie ona automatycznie powiększona.
      * Jeżeli klient wykupił poprzednią wycieczkę w ciągu 30 dni, zostaje naliczony rabat.
      *
      * @param wykupionaWycieczka wykupiona wycieczka przez klienta
      */
     public void dodajWykupionaWycieczke(WykupionaWycieczka wykupionaWycieczka) {
-        for (WykupionaWycieczka poprzedniaWycieczka : wykupioneWycieczki) {
+        // Sprawdź, czy trzeba rozszerzyć tablicę
+        if (liczbaWycieczek == wykupioneWycieczki.length) {
+            rozszerzTabliceWycieczek();
+        }
+
+        // Sprawdzanie rabatu
+        for (int i = 0; i < liczbaWycieczek; i++) {
+            WykupionaWycieczka poprzedniaWycieczka = wykupioneWycieczki[i];
             if (poprzedniaWycieczka.getKlient().equals(wykupionaWycieczka.getKlient())) {
                 wykupionaWycieczka.naliczRabatDlaKolejnych(poprzedniaWycieczka);
             }
         }
-        wykupioneWycieczki.add(wykupionaWycieczka);
+
+        wykupioneWycieczki[liczbaWycieczek] = wykupionaWycieczka;
+        liczbaWycieczek++;
+    }
+
+    /**
+     * Rozszerza tablicę wykupionych wycieczek, kiedy zabraknie w niej miejsca.
+     */
+    private void rozszerzTabliceWycieczek() {
+        WykupionaWycieczka[] nowaTablica = new WykupionaWycieczka[wykupioneWycieczki.length * 2];
+        System.arraycopy(wykupioneWycieczki, 0, nowaTablica, 0, wykupioneWycieczki.length);
+        wykupioneWycieczki = nowaTablica;
     }
 
     /**
@@ -31,8 +49,8 @@ public class BiuroPodrozy {
      */
     public double sumaWszystkichWycieczek() {
         double suma = 0;
-        for (WykupionaWycieczka wykupiona : wykupioneWycieczki) {
-            suma += wykupiona.getCenaZRabatem();
+        for (int i = 0; i < liczbaWycieczek; i++) {
+            suma += wykupioneWycieczki[i].getCenaZRabatem();
         }
         return suma;
     }
@@ -41,8 +59,8 @@ public class BiuroPodrozy {
      * Wyświetla informacje o wszystkich wykupionych wycieczkach.
      */
     public void informacjeOWykupionychWycieczkach() {
-        for (WykupionaWycieczka wykupiona : wykupioneWycieczki) {
-            System.out.println(wykupiona);
+        for (int i = 0; i < liczbaWycieczek; i++) {
+            System.out.println(wykupioneWycieczki[i]);
         }
     }
 
@@ -51,9 +69,9 @@ public class BiuroPodrozy {
      */
     public void klientZNajwyzszaKwota() {
         WykupionaWycieczka najwiekszaKwota = null;
-        for (WykupionaWycieczka wykupiona : wykupioneWycieczki) {
-            if (najwiekszaKwota == null || wykupiona.getCenaZRabatem() > najwiekszaKwota.getCenaZRabatem()) {
-                najwiekszaKwota = wykupiona;
+        for (int i = 0; i < liczbaWycieczek; i++) {
+            if (najwiekszaKwota == null || wykupioneWycieczki[i].getCenaZRabatem() > najwiekszaKwota.getCenaZRabatem()) {
+                najwiekszaKwota = wykupioneWycieczki[i];
             }
         }
         if (najwiekszaKwota != null) {
@@ -67,18 +85,17 @@ public class BiuroPodrozy {
      */
     public void wycieczkiPosortowanePoObrotach() {
         // Proste sortowanie bąbelkowe bez użycia Comparatora
-        int n = wykupioneWycieczki.size();
-        for (int i = 0; i < n - 1; i++) {
-            for (int j = 0; j < n - i - 1; j++) {
-                if (wykupioneWycieczki.get(j).getCenaZRabatem() < wykupioneWycieczki.get(j + 1).getCenaZRabatem()) {
-                    WykupionaWycieczka temp = wykupioneWycieczki.get(j);
-                    wykupioneWycieczki.set(j, wykupioneWycieczki.get(j + 1));
-                    wykupioneWycieczki.set(j + 1, temp);
+        for (int i = 0; i < liczbaWycieczek - 1; i++) {
+            for (int j = 0; j < liczbaWycieczek - i - 1; j++) {
+                if (wykupioneWycieczki[j].getCenaZRabatem() < wykupioneWycieczki[j + 1].getCenaZRabatem()) {
+                    WykupionaWycieczka temp = wykupioneWycieczki[j];
+                    wykupioneWycieczki[j] = wykupioneWycieczki[j + 1];
+                    wykupioneWycieczki[j + 1] = temp;
                 }
             }
         }
-        for (WykupionaWycieczka wykupiona : wykupioneWycieczki) {
-            System.out.println(wykupiona);
+        for (int i = 0; i < liczbaWycieczek; i++) {
+            System.out.println(wykupioneWycieczki[i]);
         }
     }
 
